@@ -81,3 +81,70 @@ const menu = [
     desc: `Red bean paste dessert, serving with honey.`,
   },
 ];
+
+
+var buttonMenu = document.querySelector(".btn-container");
+var names = ["All", "Korea", "Japan", "China"];
+
+for (var j=0; j<4; j++) {
+  var newBtn = document.createElement("button");
+  newBtn.classList = "btn-item btn btn-outline-dark";
+  newBtn.innerHTML = names[j];
+  newBtn.addEventListener('click', onClick);
+
+  buttonMenu.appendChild(newBtn);
+}
+
+var menuDOM = document.querySelector(".row");
+cretateMenuItem(menu);
+
+
+
+function onClick () {
+  var filteredMenu;
+  if ( this.innerHTML != "All" ) {
+    if ( this.innerHTML == "Korea" ) {
+      filteredMenu = menu.filter(element => {
+        return element.category == "Korea"
+      });
+    }
+    else if ( this.innerHTML == "Japan" ) {
+      filteredMenu = menu.filter(element => {
+        return element.category == "Japan"
+      });
+    }
+    else if ( this.innerHTML == "China" ) {
+      filteredMenu = menu.filter(element => {
+        return element.category == "China"
+      });
+    }
+    
+    menuDOM.innerHTML = "";
+    cretateMenuItem(filteredMenu);
+  }
+  else{
+    menuDOM.innerHTML = "";
+    cretateMenuItem(menu);
+  }
+}
+
+function cretateMenuItem (objectArray) {
+  for (var i=0; i<objectArray.length; i++) {
+    var menuItem = document.createElement("div");
+    menuItem.classList = "menu-items col-6";
+
+    menuItem.innerHTML = ` 
+        <img class="photo" src=${objectArray[i].img}>
+
+        <div class="menu-info">
+            <div class="menu-title">
+              <h4>${objectArray[i].title}</h4>
+              <h4>${objectArray[i].price}</h4>
+            </div>
+            <div class="menu-text">
+              ${objectArray[i].desc}
+            </div>
+        </div>`
+    menuDOM.appendChild(menuItem);
+  }
+}
